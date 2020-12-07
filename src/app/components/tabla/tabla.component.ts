@@ -22,10 +22,7 @@ export class TablaComponent implements OnInit {
     this.error = false;
     this.indicadorService.getIndicadores()
       .subscribe((data: Object) => {
-        console.log(data);
         this.dataSource = Object.values(data);
-
-
         this.loadin = false;
       }, (err) => {
         Swal.fire({
