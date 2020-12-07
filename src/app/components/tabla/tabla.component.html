@@ -1,0 +1,35 @@
+<mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <!-- columna Moneda -->
+    <ng-container matColumnDef="key">
+        <mat-header-cell *matHeaderCellDef> Moneda </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.key | uppercase }} </mat-cell>
+    </ng-container>
+
+    <!-- columna Nombre -->
+    <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+    </ng-container>
+
+    <!-- columna Unidad -->
+    <ng-container matColumnDef="unit">
+        <mat-header-cell *matHeaderCellDef> Unidad </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.unit | titlecase }} </mat-cell>
+    </ng-container>
+
+    <!-- columna Fecha -->
+    <ng-container matColumnDef="date">
+        <mat-header-cell *matHeaderCellDef> Fecha </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.date * 1000 | date:"MM-dd-yyyy" }} </mat-cell>
+    </ng-container>
+
+    <!-- columna Valor  -->
+    <ng-container matColumnDef="value">
+        <mat-header-cell *matHeaderCellDef justify="end"> Valor </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.value}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
+<app-progress *ngIf="loadin"></app-progress>

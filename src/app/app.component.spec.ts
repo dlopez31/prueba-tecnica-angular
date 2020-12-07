@@ -1,31 +1,60 @@
+import { Location } from "@angular/common";
+import { By } from '@angular/platform-browser';
 import { TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from "@angular/router/testing";
+import { Router, Routes, RouterOutlet } from "@angular/router";
+import { HttpClientModule } from '@angular/common/http';
+import { TablaComponent } from './components/tabla/tabla.component';
 import { AppComponent } from './app.component';
+import { ProgressComponent } from './components/progress/progress.component';
+import { IndicadoresService } from './services/indicadores.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTableModule } from '@angular/material/table';
 
-describe('AppComponent', () => {
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+
+describe('Puebas Router:app', () => {
+  let location: Location;
+  let router: Router;
+  let fixture;
+
+  const routes: Routes = [
+    { path: 'monedas', component: TablaComponent },
+    {
+      path: '**',
+      redirectTo: 'monedas'
+    }
+  ];
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientModule, MatProgressSpinnerModule,
+        MatTableModule, RouterTestingModule.withRoutes(routes)],
       declarations: [
-        AppComponent
-      ],
-    }).compileComponents();
-  });
+        TablaComponent,
+        AppComponent,
+        ProgressComponent,
+      ], providers: [IndicadoresService]
+    });
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
+    router = TestBed.get(Router);
+    location = TestBed.get(Location);
 
-  it(`should have as title 'prueba-tecnica'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('prueba-tecnica');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
+    fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('prueba-tecnica app is running!');
+    fixture.ngZone.run(() => {
+      router.initialNavigation();
+    });
+
+  });
+
+  it('Navega a la ruta monedas', async () => {
+    const success = await fixture.ngZone.run(() => router.navigateByUrl('monedas'));
+    expect(success).toBeTruthy();
+    expect(location.path()).toBe('/monedas');
+  });
+
+  it('Debe de tener un router-outlet', async () => {
+    const debugElement = fixture.debugElement.query(By.directive(RouterOutlet));
+    expect(debugElement).not.toBeNull();
   });
 });

@@ -1,0 +1,28 @@
+table {
+    width: 80%;
+  }
+  .mat-header-cell {
+    font-weight: bold;
+    font-size: 12px;
+}
+  .mat-cell {
+    font-size: 12px;
+}
+
+  .mat-column-key{
+    flex: 0 0 90px;
+}
+  .mat-column-name{
+    flex: 0 0 450px;
+}
+  .mat-column-unit{
+    flex: 0 0 150px;
+}
+  .mat-column-date{
+    flex: 0 0 150px;
+    justify-content: center;
+}
+  .mat-column-value{
+    flex: 0 0 120px;
+    justify-content: flex-end;
+}

@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'prueba-tecnica';
+  public title = 'Tabla que muestra los últimos valores de todas las monedas';
 }
